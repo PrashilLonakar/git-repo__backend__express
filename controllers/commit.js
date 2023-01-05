@@ -6,7 +6,19 @@ const https = require("https");
 exports.getCommitsByRepoName = (req, res, next) => {
   const username = req.query.username;
   const reponame = req.query.reponame;
-  console.log("username", username);
+  if (!username && !reponame) {
+    return res.status(500).json({
+      message: "username and reponame is missing!",
+    });
+  } else if (username && !reponame) {
+    return res.status(500).json({
+      message: "reponame is missing!",
+    });
+  } else if (!username && reponame) {
+    return res.status(500).json({
+      message: "username is missing!",
+    });
+  }
   const options = {
     hostname: "api.github.com",
     path: "/repos/" + username + "/" + reponame + "/" + "commits",

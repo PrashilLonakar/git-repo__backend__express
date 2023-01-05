@@ -5,6 +5,11 @@ const https = require("https");
 
 exports.getRepo = (req, res, next) => {
   const username = req.query.username;
+  if (!username) {
+    return res.status(500).json({
+      message: "username is missing!",
+    });
+  }
   console.log("username", username);
   const options = {
     hostname: "api.github.com",
@@ -27,7 +32,19 @@ exports.getRepo = (req, res, next) => {
 exports.getRepoByName = (req, res, next) => {
   const username = req.query.username;
   const reponame = req.query.reponame;
-  console.log("username", username);
+  if (!username && !reponame) {
+    return res.status(500).json({
+      message: "username and reponame is missing!",
+    });
+  } else if (username && !reponame) {
+    return res.status(500).json({
+      message: "reponame is missing!",
+    });
+  } else if (!username && reponame) {
+    return res.status(500).json({
+      message: "username is missing!",
+    });
+  }
   const options = {
     hostname: "api.github.com",
     path: "/repos/" + username + "/" + reponame,

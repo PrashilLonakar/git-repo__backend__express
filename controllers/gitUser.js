@@ -3,6 +3,11 @@ const https = require("https");
 
 exports.getUser = (req, res, next) => {
   const username = req.query.username;
+  if (!username) {
+    return res.status(500).json({
+      message: "username is missing!",
+    });
+  }
   console.log("username", username);
   const options = {
     hostname: "api.github.com",
