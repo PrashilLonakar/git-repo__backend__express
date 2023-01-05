@@ -1,6 +1,7 @@
 const express = require("express");
 const repoRoutes = require("./routes/repo");
 const gitUserRoutes = require("./routes/gitUser");
+const commitRoutes = require("./routes/commit");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -33,5 +34,6 @@ app.use((req, res, next) => {
 
 app.use("/api/repo", repoRoutes);
 app.use("/api/git-user", gitUserRoutes);
+app.use("/api/commits", commitRoutes);
 
 module.exports = app;
